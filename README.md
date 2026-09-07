@@ -30,7 +30,7 @@ A estrutura do sistema é organizada em cinco pilares fundamentais:
 
 ### Diagrama Entidade-Relacionamento (ERD)
 
-![Diagrama Entidade-Relacionamento do PDV](DIAGRAMA_MERCADO_DB.jpg)
+![Diagrama Entidade-Relacionamento do PDV](https://cdn.discordapp.com/attachments/766803063976624130/1546657079719370913/image.png?ex=6aa09427&is=6a9f42a7&hm=9052adaca8460a2fa1f4aed3bd18fb64e2f1bdd1d6301d59c0246ec9a9e2daea&)
 
 ---
 
