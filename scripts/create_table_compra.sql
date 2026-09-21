@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS compra (
     forma VARCHAR(50) NOT NULL DEFAULT 'pendente',
     valor DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     metodo_pagamento VARCHAR(30) NOT NULl,
-    CONSTRAINT fk_id_produto FOREIGN KEY (produto_id) REFERENCES produto(id),
     CHECK (metodo_pagamento IN ('pix', 'cartao_credito', 'cartao_debito', 'boleto')),
     cliente_id INT NOT NULL,
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (cliente_id) REFERENCES cliente(id)
