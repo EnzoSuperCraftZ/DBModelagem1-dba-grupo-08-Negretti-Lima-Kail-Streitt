@@ -34,6 +34,12 @@ A estrutura do sistema é organizada em cinco pilares fundamentais:
 
 ---
 
+### Mockup do Paibek CRM
+
+![Mockup_Painel_CRM](https://f.feridinha.com/PAImC.png)
+
+---
+
 ### Dinâmica das Informações
 
 * **Identificação da Venda:** Toda compra está diretamente conectada a um cliente cadastrado na base.
