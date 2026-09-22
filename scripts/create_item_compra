@@ -1,0 +1,11 @@
+CREATE TABLE ITEM_COMPRA (
+    compra_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL DEFAULT 1,
+    preco_unitario DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (compra_id, produto_id),
+    FOREIGN KEY (compra_id) REFERENCES COMPRA(id) ON DELETE CASCADE,
+    FOREIGN KEY (produto_id) REFERENCES PRODUTO(id) ON DELETE RESTRICT,
+    CONSTRAINT chk_quantidade_valida CHECK (quantidade > 0),
+    CONSTRAINT chk_preco_valido CHECK (preco_unitario >= 0)
+);
