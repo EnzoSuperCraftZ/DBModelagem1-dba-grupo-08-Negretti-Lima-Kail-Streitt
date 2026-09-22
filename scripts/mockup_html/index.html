@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina CRM | Sistema de Vendas e Fidelidade</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="login-screen" class="auth-wrapper">
+        <div class="auth-box">
+            <div class="brand">
+                <div class="brand-icon">L</div>
+                <h2>Lumina CRM</h2>
+            </div>
+            <p class="subtitle">Bem-vindo(a) de volta</p>
+            <div class="input-group">
+                <label for="user">Operador</label>
+                <input type="text" id="user" placeholder="Digite seu usuário" />
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="••••••••" />
+            </div>
+            <button class="btn-primary auth-btn" onclick="iniciarSistema()">Acessar PDV</button>
+        </div>
+    </div>
+
+    <div id="main-app" class="app-container" style="display: none;">
+        
+        <header class="topbar">
+            <div class="brand-small">
+                <div class="brand-icon-small">L</div>
+                <span>Lumina</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" onclick="mudarAba('tela-dashboard', this)">Visão Geral</button>
+                <button class="nav-item" onclick="mudarAba('tela-clientes', this)">Clube de Fidelidade</button>
+                <button class="nav-item" onclick="mudarAba('tela-produtos', this)">Catálogo</button>
+            </nav>
+            <div class="user-profile">
+                <div class="avatar">J</div>
+                <span>João Silva</span>
+            </div>
+        </header>
+
+        <main class="content-area">
+            
+            <section id="tela-dashboard" class="aba active">
+                <div class="section-header">
+                    <h1>Resumo Operacional</h1>
+                    <span class="date-badge">Hoje, 21 de Setembro</span>
+                </div>
+                
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <span class="kpi-label">Faturamento Diário</span>
+                        <h3 class="kpi-value">R$ 3.450,00</h3>
+                    </div>
+                    <div class="kpi-card destaque">
+                        <span class="kpi-label">Pontos Distribuídos</span>
+                        <h3 class="kpi-value">1.250 pts</h3>
+                        <div class="kpi-trend">+15% de engajamento hoje</div>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-label">Novos Membros VIP</span>
+                        <h3 class="kpi-value">8</h3>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Evolução de Vendas (Últimos 7 dias)</h3>
+                        <div class="canvas-container">
+                            <canvas id="graficoVendas"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Produtos Mais Vendidos (Unidades)</h3>
+                        <div class="canvas-container">
+                            <canvas id="graficoProdutos"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="tela-clientes" class="aba" style="display: none;">
+                <div class="section-header">
+                    <h1>Gestão de Membros</h1>
+                    <button class="btn-primary">+ Cadastrar Cliente</button>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome do Cliente</th>
+                                <th>Documento (CPF)</th>
+                                <th>Categoria</th>
+                                <th>Saldo de Pontos</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Marina Costa</td>
+                                <td>123.456.789-00</td>
+                                <td><span class="tag tag-diamante">Diamante</span></td>
+                                <td><strong class="pontos">4.500</strong></td>
+                                <td><button class="btn-text">Ver Histórico</button></td>
+                            </tr>
+                            <tr>
+                                <td>Roberto Almeida</td>
+                                <td>987.654.321-11</td>
+                                <td><span class="tag tag-prata">Prata</span></td>
+                                <td><strong class="pontos">320</strong></td>
+                                <td><button class="btn-text">Ver Histórico</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="tela-produtos" class="aba" style="display: none;">
+                <div class="section-header">
+                    <h1>Catálogo de Produtos</h1>
+                    <button class="btn-primary">+ Novo Produto</button>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descrição</th>
+                                <th>Preço Unitário</th>
+                                <th>Estoque</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#PRD-001</td>
+                                <td>Café Especial Torrado 500g</td>
+                                <td>R$ 45,00</td>
+                                <td>120 un</td>
+                            </tr>
+                            <tr>
+                                <td>#PRD-002</td>
+                                <td>Nescau 500g</td>
+                                <td>R$ 120,00</td>
+                                <td>15 un</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        let chartsRendered = false;
+
+        function iniciarSistema() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+            
+            setTimeout(renderizarGraficos, 150); 
+        }
+
+        function mudarAba(idAba, botaoClicado) {
+            document.querySelectorAll('.aba').forEach(aba => {
+                aba.style.display = 'none';
+            });
+            
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(idAba).style.display = 'block';
+            botaoClicado.classList.add('active');
+        }
+
+        function renderizarGraficos() {
+            if (chartsRendered) return;
+            
+            const corPrimaria = '#059669'; 
+            const corPrimariaClara = 'rgba(5, 150, 105, 0.2)';
+            const corSecundaria = '#3182ce'; 
+            const corTexto = '#718096';
+
+            Chart.defaults.color = corTexto;
+            Chart.defaults.font.family = "'Inter', 'Segoe UI', sans-serif";
+
+            const ctxVendas = document.getElementById('graficoVendas').getContext('2d');
+            new Chart(ctxVendas, {
+                type: 'line',
+                data: {
+                    labels: ['15/09', '16/09', '17/09', '18/09', '19/09', '20/09', 'Hoje'],
+                    datasets: [{
+                        label: 'Faturamento (R$)',
+                        data: [2100, 2400, 1950, 3100, 2800, 1500, 3450],
+                        borderColor: corPrimaria,
+                        backgroundColor: corPrimariaClara,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: corPrimaria,
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.3 
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { borderDash: [5, 5] } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            const ctxProdutos = document.getElementById('graficoProdutos').getContext('2d');
+            new Chart(ctxProdutos, {
+                type: 'bar',
+                data: {
+                    labels: ['Café Especial', 'Nescau 500g', 'Detergente', 'Caneca', 'Grão Moído'],
+                    datasets: [{
+                        label: 'Unidades',
+                        data: [145, 82, 64, 45, 30],
+                        backgroundColor: [
+                            corPrimaria,
+                            corSecundaria,
+                            '#4a5568',
+                            '#a0aec0',
+                            '#cbd5e0'
+                        ],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', 
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, grid: { borderDash: [5, 5] } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            chartsRendered = true;
+        }
+    </script>
+</body>
+</html>
